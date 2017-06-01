@@ -5,48 +5,87 @@ import model.IMaze;
 
 public class NodeMap implements INodeMap {
 
-	public NodeMap(IMaze maze) {
-		
+		private GridSpace[][] data;
+		private GraphNode[][] nodes;
+		private GraphNode root;
+
+		public NodeMap(IMaze maze)
+		{
 		//Create a connected graph between each node in the data.
 		int[] robLoc = maze.getRobotPos();
 		
-		GridSpace[][] data = maze.getData();
+		data = maze.getData();
 		
 		//For reference
-		GraphNode[][] nodes = new GraphNode[data.length][data[0].length];
+		nodes = new GraphNode[data.length][data[0].length];
 		
 		//Recursively build a connected graph
 		
-		GraphNode root = buildGraph(robLoc);
+		root = buildGraph(robLoc);
 		
 		
 	}
 
 	private GraphNode buildGraph(int[] robLoc) {
 		
-		GraphNode node = new GraphNode();
+		if (outOfBounds(robLoc))
+		{
+			return null;
+		}
+		
+		GraphNode node = init(robLoc);
 		
 		//add up
 		
-		//add down
+		return node;
+	}
+
+	private GraphNode init(int[] robLoc) {
+		if (nodes[robLoc[0]][robLoc[1]]==null)
+		{
+			GraphNode node = new GraphNode();
+			node.setUp(buildGraph(new int[]{robLoc[0],robLoc[1]+1}));
+			
+			
+			//add down
+			node.setDown(buildGraph(new int[]{robLoc[0],robLoc[1]-1}));
+			
+			
+			//add left
+			node.setLeft(buildGraph(new int[]{robLoc[0]-1,robLoc[1]}));
+			
+			//add right
+			node.setRigth(buildGraph(new int[]{robLoc[0]+1,robLoc[1]}));
+			
+			//add upLeft
+			node.setUpLeft(buildGraph(new int[]{robLoc[0]-1,robLoc[1]+1}));
+			
+			//add downLeft
+			node.setDownleft(buildGraph(new int[]{robLoc[0]-1,robLoc[1]-1}));
+			
+			//add upRight
+			node.setUpRight(buildGraph(new int[]{robLoc[0]+1,robLoc[1]+1}));
+			
+			//add downRight
+			node.setDownRight(buildGraph(new int[]{robLoc[0]-1,robLoc[1]+1}));
+			
+			nodes[robLoc[0]][robLoc[1]]= node;
+		}
 		
-		//add left
+		return nodes[robLoc[0]][robLoc[1]];
+	}
+
+	private boolean outOfBounds(int i[]) {
 		
-		//add east
 		
-		//add upLeft
 		
-		//add downLeft
-		
-		//add upRight
-		
-		//add downRight
-		
-		return null;
+		boolean res = i[0]>-1 && i[0]<data.length && i[1]>-1 && i[1]>data[0].length;
+		return !res;
 	}
 
 	@Override
 	public GraphNode getRoot() {
-		return null;
+		return root;
 	}
+
 }
