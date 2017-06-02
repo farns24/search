@@ -21,6 +21,8 @@ public interface IMaze {
     public void draw();
     
     public int[] getRobotPos();
+
+    public int[] getGoalPos();
     
 }
 

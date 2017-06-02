@@ -12,6 +12,8 @@ public class Maze implements IMaze {
 	private int yMax;
 	private int roboX;
 	private int roboY;
+	private int goalX;
+	private int goalY;
 
 	@Override
 	public void initMaze(LocationScape location, int goalId) {
@@ -61,6 +63,8 @@ public class Maze implements IMaze {
 		}
 		else if (key.equals("3"))
 		{
+			goalX = x;
+			goalY = y;
 			return GridSpace.GOAL;
 		}
 		return GridSpace.OBSTICAL;
@@ -129,7 +133,9 @@ public class Maze implements IMaze {
 		// TODO Auto-generated method stub
 		return new int[]{roboX,roboY};
 	}
-	
-	
 
+	@Override
+	public int[] getGoalPos() {
+		return new int[]{goalX,goalY};
+	}
 }
