@@ -48,11 +48,11 @@ public class TelnetProxy implements ITelnetProxy {
 
 	        // Login the user
 	       // LOG.debug("Logging in");
-	        String res = readUntil("MSE430 Server (CS 470 BYU)");
+	//        String res = readUntil("MSE430 Server (CS 470 BYU)");
 	       // write(telnetUsername);
 	        //readUntil("Password: ");
 	       // write(telnetPassword);
-	        System.out.println(res);
+	  //      System.out.println(res);
 	        // Advance to a prompt
 	        //LOG.debug("Reading up to prompt.");
 	//        readUntil(prompt);

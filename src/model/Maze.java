@@ -55,7 +55,7 @@ public class Maze implements IMaze {
 	}
 
 	private GridSpace builtType(String key, int x , int y) {
-		if (key.equals("Robot"))
+		if (key.equals("robot"))
 		{
 			roboX = x;
 			roboY = y;

@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import telnet.TaskException;
+import telnet.TelnetProxy;
 import model.IMaze;
 import model.LocationScape;
 import model.Maze;
@@ -43,10 +45,29 @@ public class TestMaze {
 		location.put("5", obst5 );
 		
 		maze.initMaze(location , 3);
-		maze.draw();
+		//maze.draw();
 		
 		
 		
+	}
+	
+	@Test
+	public void buildMapFromCamTest()
+	{
+		TelnetProxy proxy = new TelnetProxy();
+		
+		try {
+			proxy.connectToBot();
+		
+		
+		    Maze m = new Maze();
+		    LocationScape location=proxy.where();;
+		    m.initMaze(location, 3);
+		    m.draw();
+		} catch (TaskException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
