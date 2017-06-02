@@ -3,7 +3,7 @@ package a.star;
 import model.GridSpace;
 import model.IMaze;
 
-public class NodeMap {
+public class NodeMap implements INodeMap {
 
 	public NodeMap(IMaze maze) {
 		
@@ -45,4 +45,8 @@ public class NodeMap {
 		return null;
 	}
 
+	@Override
+	public GraphNode getRoot() {
+		return null;
+	}
 }
