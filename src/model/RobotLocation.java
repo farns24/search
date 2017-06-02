@@ -27,8 +27,11 @@ public class RobotLocation {
 
 	private int[] convertCoordToField(double[] pos) {
         //truncating intentionally
-        int x = (int)pos[0]/10;
-        int y = (int)pos[1]/10;
+//		System.out.printf("pos[0]: %f\n", pos[0]);
+//		System.out.printf("pos[1]: %f\n", pos[1]);
+		
+        int x = (int)(pos[0]/118.0);
+        int y = (int)(pos[1]/118.0);
         return new int[] {x,y};
     }
 	public int[] getCenter() {

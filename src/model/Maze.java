@@ -15,26 +15,108 @@ public class Maze implements IMaze {
 	private int goalX;
 	private int goalY;
 
+//	@Override
+//	public void initMaze(LocationScape location, int goalId) {
+//		
+//		for (String key: location.keySet())
+//		{
+//			RobotLocation val = location.get(key);
+//			
+//			//Find the range of x and y values
+//			int[] cent = val.getCenter();
+//			
+//			updateRange(cent);
+//			
+//		}
+//		
+//		data = new GridSpace[xMax-xMin][yMax-yMin];
+//		
+//		for (int i = xMin; i< xMax ; i++)
+//		{
+//			for (int j = yMin; j<yMax; j++ )
+//			{
+//				data[i][j] = GridSpace.CLEAR;
+//			}
+//		}
+//		
+//		for (String key: location.keySet())
+//		{
+//			RobotLocation val = location.get(key);
+//			
+//			//Find the range of x and y values
+//			int[] cent = val.getCenter();
+//			int x =cent[XCOL];
+//			int y = cent[YCOL];		
+//			GridSpace type = builtType(key,x,y);
+//			if (y-1>=0)
+//			{
+//				data[x][y-1] = type;
+//				if (x+1<data.length)
+//				data[x+1][y-1] = type;
+//				data[x-1][y-1] = type;
+//			}
+//			data[x][y] = type;
+//			if (x+1<data.length)
+//			{
+//			data[x+1][y] = type;
+//			if(y+1<data[0].length)
+//			data[x+1][y+1] = type;
+//			}
+//			if(y+1<data[0].length)
+//			data[x][y+1] = type;
+//			if (x-1>=0)
+//			{
+//			data[x-1][y] = type;
+//			if(y+1<data[0].length)
+//			data[x-1][y+1] = type;
+//			}
+//			
+//		}
+//		
+//
+//	}
+//
+//	private GridSpace builtType(String key, int x , int y) {
+//		if (key.equals("robot"))
+//		{
+//			roboX = x;
+//			roboY = y;
+//			return GridSpace.ROBOT;
+//		}
+//		else if (key.equals("3"))
+//		{
+//			goalX = x;
+//			goalY = y;
+//			return GridSpace.GOAL;
+//		}
+//		return GridSpace.OBSTICAL;
+//	}
+//
+//	public void updateRange(int[] cent) {
+//		if (cent[XCOL]> xMax)
+//		{
+//			xMax = cent[XCOL]+1;
+//		}
+//		if (cent[XCOL]< xMin)
+//		{
+//			xMin = cent[XCOL];
+//		}
+//		if (cent[YCOL] > yMax)
+//		{
+//			yMax = cent[YCOL]+1;
+//		}
+//		if (cent[YCOL]< yMin)
+//		{
+//			yMin = cent[YCOL];
+//		}
+//		
+//	}
+
 	@Override
 	public void initMaze(LocationScape location, int goalId) {
-		
-		for (String key: location.keySet())
-		{
-			RobotLocation val = location.get(key);
-			
-			//Find the range of x and y values
-			int[] cent = val.getCenter();
-			
-			updateRange(cent);
-			
-		}
-		
-		data = new GridSpace[xMax-xMin][yMax-yMin];
-		
-		for (int i = xMin; i< xMax ; i++)
-		{
-			for (int j = yMin; j<yMax; j++ )
-			{
+		data = new GridSpace[14][8];
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[0].length; j++) {
 				data[i][j] = GridSpace.CLEAR;
 			}
 		}
@@ -45,50 +127,24 @@ public class Maze implements IMaze {
 			
 			//Find the range of x and y values
 			int[] cent = val.getCenter();
-			int x =cent[XCOL];
-			int y = cent[YCOL];		
-			data[x][y] = builtType(key,x,y);
 			
-		}
-		
-
-	}
-
-	private GridSpace builtType(String key, int x , int y) {
-		if (key.equals("robot"))
-		{
-			roboX = x;
-			roboY = y;
-			return GridSpace.ROBOT;
-		}
-		else if (key.equals("3"))
-		{
-			goalX = x;
-			goalY = y;
-			return GridSpace.GOAL;
-		}
-		return GridSpace.OBSTICAL;
-	}
-
-	public void updateRange(int[] cent) {
-		if (cent[XCOL]> xMax)
-		{
-			xMax = cent[XCOL]+1;
-		}
-		if (cent[XCOL]< xMin)
-		{
-			xMin = cent[XCOL];
-		}
-		if (cent[YCOL] > yMax)
-		{
-			yMax = cent[YCOL]+1;
-		}
-		if (cent[YCOL]< yMin)
-		{
-			yMin = cent[YCOL];
+			if(key.equals("robot")) {
+				data[cent[0]][cent[1]] = GridSpace.ROBOT;
+			} else if(key.equals("3")) {
+				data[cent[0]][cent[1]] = GridSpace.GOAL;
+			} else {
+				data[cent[0]][cent[1]] = GridSpace.OBSTICAL;
+			}
+			
+			
+//			double width = getMarkerWidth(val.getCorners());
+			System.out.printf("cent[0]: %d\n", cent[0]);
+			System.out.printf("cent[1]: %d\n\n", cent[1]);
+//			System.out.printf("width: %f", width);
 		}
 		
 	}
+	
 
 	@Override
 	public GridSpace[][] getData() {
@@ -97,25 +153,26 @@ public class Maze implements IMaze {
 
 	@Override
 	public void draw() {
-		for (GridSpace[] row : data)
+		for (int i = 0; i < data[0].length; i++)
 		{
-			for (GridSpace space: row)
+			for (int j = 0; j < data.length; j++)
 			{
+				GridSpace space = data[j][i];
 				switch (space){
 				case CLEAR:
-					System.out.print("   ");
+					System.out.print(" ");
 					
 					break;
 				case GOAL:
-					System.out.print(" G ");
+					System.out.print("G");
 					
 					break;
 				case OBSTICAL:
-					System.out.print("XXX");
+					System.out.print("X");
 					
 					break;
 				case ROBOT:
-					System.out.print(" R ");
+					System.out.print("R");
 					
 					break;
 				default:
@@ -137,5 +194,15 @@ public class Maze implements IMaze {
 	@Override
 	public int[] getGoalPos() {
 		return new int[]{goalX,goalY};
+	}
+	
+	private double getMarkerWidth(double[][] corners) {
+		double max = 0;
+		double min = Double.MAX_VALUE;
+		for (int i = 0; i < corners.length; i++) {
+			if(corners[i][0] > max) max = corners[i][0];
+			if(corners[i][0] < min) min = corners[i][0];
+		}
+		return max - min;
 	}
 }
