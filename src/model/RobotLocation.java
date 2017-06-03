@@ -1,5 +1,10 @@
 package model;
 
+import java.util.Arrays;
+
+import model.potentialFields.CompositeField;
+import model.potentialFields.PotentialField;
+
 
 public class RobotLocation {
 
@@ -57,5 +62,13 @@ public class RobotLocation {
     	}
     	
     	return Math.atan2(convert[1],convert[0]);
+    }
+
+    public int[] getPFVector(PotentialField pF) {
+        int[] pFLocation = getCenter();
+        int row = pFLocation[1];
+        int col = pFLocation[0];
+        System.out.println("Field = " +Arrays.toString( pF.getField()[row][col]));
+        return pF.getField()[row][col];
     }
 }

@@ -10,8 +10,8 @@ public class MyUtils {
 		robTheta = makePositive(robTheta);
 		goalTheta = makePositive(goalTheta);
 	
-		System.out.println("Robot Direction : " +robTheta);
-		System.out.println("Goal Direction : " + goalTheta);
+		//System.out.println("Robot Direction : " +robTheta);
+		//System.out.println("Goal Direction : " + goalTheta);
 		//assert(robTheta>=0.0);
 		//assert(robTheta<= 2.0 * Math.PI);
 		double diff = robTheta - goalTheta;
@@ -70,9 +70,20 @@ public class MyUtils {
 		return robTheta;
 	}
 
-	public static boolean madeIt(int[] vect) {
-		// TODO Auto-generated method stub
-		return vect[0] == 0 && vect[1]==0;
+	public static boolean madeIt(int[] vect, boolean lastStep) {
+		double threshold = 0.5;
+		if (lastStep)
+		{
+			threshold = 1.0;
+		}
+		boolean result = Math.sqrt(Math.pow(vect[0],2)+ Math.pow( vect[1],2))<threshold;
+		if (result)
+		{
+			System.out.println("Looks like we made it, Left each other on the way...");
+			
+		}
+		return result;
+		
 	}
 
 }

@@ -24,7 +24,7 @@ public class GoClockWiseTask extends MotionState {
 		}
 
 		try {
-			proxy.speed(2, 7);
+			proxy.speed(0, 5);
 		} catch (TaskException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

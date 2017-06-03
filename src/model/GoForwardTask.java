@@ -9,7 +9,7 @@ public class GoForwardTask extends MotionState {
 	public void run(ITelnetProxy proxy) {
 
 		try {
-			proxy.speed(7, 7);
+			proxy.speed(4, 4);
 		} catch (TaskException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

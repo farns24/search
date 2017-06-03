@@ -22,7 +22,7 @@ public class GoCounterClockWiseTask extends MotionState {
 			e.printStackTrace();
 		}
 		try {
-			proxy.speed(7, 2);
+			proxy.speed(5, 0);
 		} catch (TaskException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
