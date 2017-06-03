@@ -60,10 +60,10 @@ public class TestMaze {
 //			proxy.connectToBot();
 //		
 //		
-//		    Maze m = new Maze();
+//		    Maze mult = new Maze();
 //		    LocationScape location=proxy.where();;
-//		    m.initMaze(location, 3);
-//		    m.draw();
+//		    mult.initMaze(location, 3);
+//		    mult.draw();
 //		} catch (TaskException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();

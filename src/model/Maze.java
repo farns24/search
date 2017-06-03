@@ -142,8 +142,8 @@ public class Maze implements IMaze {
 			
 			
 //			double width = getMarkerWidth(val.getCorners());
-			System.out.printf("cent[0]: %d\n", cent[0]);
-			System.out.printf("cent[1]: %d\n\n", cent[1]);
+//			System.out.printf("cent[0]: %d\n", cent[0]);
+//			System.out.printf("cent[1]: %d\n\n", cent[1]);
 //			System.out.printf("width: %f", width);
 		}
 		
@@ -164,7 +164,7 @@ public class Maze implements IMaze {
 				GridSpace space = data[j][i];
 				switch (space){
 				case CLEAR:
-					System.out.print(" ");
+					System.out.print("•");
 					
 					break;
 				case GOAL:

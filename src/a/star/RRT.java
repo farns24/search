@@ -17,6 +17,8 @@ public class RRT implements IPathFinder {
     private int[] goal;
     private final int row = 0;
     private final int col = 1;
+    private int rows;
+    private int cols;
 
     public RRT() {
         pool = new ArrayList<>();
@@ -26,6 +28,8 @@ public class RRT implements IPathFinder {
     public List<IRoboInstruction> findPath(IMaze maze) {
         GridSpace[][] spaces = maze.getData();
         initPool(spaces);
+        cols = spaces.length;
+        rows = spaces[0].length;
         goal = new int[2];
         goal[row] = maze.getGoalPos()[1];
         goal[col] = maze.getGoalPos()[0];
@@ -36,7 +40,9 @@ public class RRT implements IPathFinder {
         do {
             int[] selected = getRandom();
             nearest = getNearest(selected, spaces); //Adds to Path as well as returns it
-        } while (nearest[row] != goal[row] && nearest[col] != goal[col]);
+            if (nearest == null) nearest = new int[] {-1,-1};
+            if(nearest[row] == goal[row] && nearest[col] == goal[col]) System.out.println("found goal!");
+        } while (!(nearest[row] == goal[row] && nearest[col] == goal[col]));
 
         return translatePath();
     }
@@ -51,10 +57,12 @@ public class RRT implements IPathFinder {
         Node nearestOnPath = recursiveGetNearest(root, selected, Double.MAX_VALUE);
         int[] nearestNeighborSoFar = null;
         for (int i = nearestOnPath.getLocation()[row]-1; i <= nearestOnPath.getLocation()[row]+1; i++) {
-            if (i < 0 || i >= spaces.length) continue;
+            if (i < 0 || i >= spaces[row].length) continue;
             for (int j = nearestOnPath.getLocation()[col]-1; j <= nearestOnPath.getLocation()[col]+1; j++) {
-                if (j < 0 || j >= spaces[row].length) continue;
+                if (j < 0 || j >= spaces.length) continue;
+                if (spaces[j][i] == GridSpace.OBSTICAL) continue;
                 if (i == nearestOnPath.getLocation()[row] && j == nearestOnPath.getLocation()[col]) continue;
+                if (getPoolIndex(new int[] {i,j}) == -1) continue;
                 if (nearestNeighborSoFar == null) {
                     nearestNeighborSoFar = new int[] {i,j};
                 } else {
@@ -65,10 +73,13 @@ public class RRT implements IPathFinder {
 
             }
         }
-        addToPath(nearestOnPath, nearestNeighborSoFar);
-        pool.remove(getPoolIndex(nearestNeighborSoFar));
-        if (nearestNeighborSoFar[0] == goal[0] && nearestNeighborSoFar[1] == goal[1]) {
-            goalNode = new Node(nearestNeighborSoFar);
+        if (nearestNeighborSoFar != null) {
+            addToPath(nearestOnPath, nearestNeighborSoFar);
+            pool.remove(getPoolIndex(nearestNeighborSoFar));
+            if (nearestNeighborSoFar[0] == goal[0] && nearestNeighborSoFar[1] == goal[1]) {
+                goalNode = new Node(nearestNeighborSoFar);
+                goalNode.setParent(nearestOnPath);
+            }
         }
         return nearestNeighborSoFar;
     }
@@ -106,15 +117,18 @@ public class RRT implements IPathFinder {
         for (int i = 0; i < spaces.length; i++) {
             for (int j = 0; j < spaces[row].length; j++) {
                 if (spaces[i][j] == GridSpace.CLEAR || spaces[i][j] == GridSpace.GOAL) {
-                    pool.add(new int[] {i,j});
+                    pool.add(new int[] {j,i});
                 } else if (spaces[i][j] == GridSpace.ROBOT) {
-                    root = new Node(i, j);
+                    root = new Node(j, i);
                 }
             }
         }
     }
 
     private double calcDistance(int[] a, int[] b) {
+        if (a == null || b == null) {
+            System.out.println("weird");
+        }
         double firstTerm = Math.pow(b[col] - a[col], 2);
         double secTerm = Math.pow(b[row] - a[row], 2);
         return Math.sqrt(firstTerm + secTerm);
@@ -176,6 +190,60 @@ public class RRT implements IPathFinder {
             }
         }
         return instruction;
+    }
+
+    public void printGraph() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (findNodeInGraph(i,j)) {
+                    System.out.print("•");
+                } else {
+                    System.out.print("-");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    private boolean findNodeInGraph(int row, int col) {
+        return recursiveFindNodeInGraph(root, new int[] {row,col});
+    }
+
+    private boolean recursiveFindNodeInGraph(Node currentNode, int[] targetLoc) {
+        boolean result = false;
+        int[] thisLocation = currentNode.getLocation();
+        if (thisLocation[0] == targetLoc[0] && thisLocation[1] == targetLoc[1]) return true;
+        if (currentNode.getChildren() == null) return false;
+        for (Node child : currentNode.getChildren()) {
+            result = recursiveFindNodeInGraph(child, targetLoc);
+            if (result) return true;
+        }
+        return result;
+    }
+
+    public void printPath() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (findNodeInPath(i,j)) {
+                    System.out.print("•");
+                } else {
+                    System.out.print("-");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    private boolean findNodeInPath(int row, int col) {
+        Node currentNode = goalNode;
+        boolean result = false;
+        do {
+            int[] thisLocation = currentNode.getLocation();
+            result = (thisLocation[0] == row && thisLocation[1] == col);
+            if (result) return true;
+            currentNode = currentNode.getParent();
+        } while(currentNode != null);
+        return result;
     }
 
     private class Node {
