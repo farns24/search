@@ -129,8 +129,12 @@ public class Maze implements IMaze {
 			int[] cent = val.getCenter();
 			
 			if(key.equals("robot")) {
+				roboX = cent[0];
+				roboY = cent[1];
 				data[cent[0]][cent[1]] = GridSpace.ROBOT;
 			} else if(key.equals("3")) {
+				goalX = cent[0];
+				goalY = cent[1];
 				data[cent[0]][cent[1]] = GridSpace.GOAL;
 			} else {
 				data[cent[0]][cent[1]] = GridSpace.OBSTICAL;
