@@ -51,23 +51,25 @@ public class TestMaze {
 //		
 //	}
 //	
-//	@Test
-//	public void buildMapFromCamTest()
-//	{
-//		TelnetProxy proxy = new TelnetProxy();
-//		
-//		try {
-//			proxy.connectToBot();
-//		
-//		
-//		    Maze mult = new Maze();
-//		    LocationScape location=proxy.where();;
-//		    mult.initMaze(location, 3);
-//		    mult.draw();
-//		} catch (TaskException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+
+	@Test
+	public void buildMapFromCamTest()
+	{
+		TelnetProxy proxy = new TelnetProxy();
+		
+		try {
+			proxy.connectToBot();
+		
+		
+		    Maze m = new Maze();
+		    LocationScape location=proxy.where();;
+		    m.initMaze(location, 3);
+		    m.draw();
+		} catch (TaskException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 }
