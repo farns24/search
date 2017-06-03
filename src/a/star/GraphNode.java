@@ -135,4 +135,9 @@ public class GraphNode implements Comparable<GraphNode>{
 		return 0;
 	}
 
+	public int[] getPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

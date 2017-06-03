@@ -4,8 +4,12 @@ import a.star.RRT;
 import model.LocationScape;
 import model.Maze;
 import model.RobotLocation;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import telnet.TaskException;
+import telnet.TelnetProxy;
 
 import java.util.Random;
 
@@ -37,14 +41,36 @@ public class RRTTest {
             ls.put(Integer.toString(rand.nextInt()), rL2);
         }
         maze.initMaze(ls, 3);
-        maze.draw();
+//        maze.draw();
     }
 
     @Test
     public void findPath() throws Exception {
         rrt.findPath(maze);
         rrt.printGraph();
+        System.out.println();
         rrt.printPath();
+    }
+    
+    @Test
+    public void findPath2() throws Exception {
+    	TelnetProxy proxy = new TelnetProxy();
+		
+		try {
+			proxy.connectToBot();
+		
+		
+		    Maze m = new Maze();
+		    LocationScape location=proxy.where();;
+		    m.initMaze(location, 3);
+		    m.draw();
+			
+			rrt.findPath(m);
+	        System.out.println();
+			rrt.printPath();
+		} catch (TaskException e) {
+			e.printStackTrace();
+		}
     }
 
 }

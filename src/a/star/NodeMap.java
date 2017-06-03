@@ -12,6 +12,7 @@ public class NodeMap implements INodeMap {
 		private GridSpace[][] data;
 		private GraphNode[][] nodes;
 		private GraphNode root;
+		private GraphNode goal;
 
 		public NodeMap(IMaze maze)
 		{
@@ -36,18 +37,37 @@ public class NodeMap implements INodeMap {
 		{
 			return null;
 		}
+		if (isBarrior(robLoc))
+		{
+			return null;
+		}
+	
 		
 		GraphNode node = init(robLoc);
-		
+			if (isGoal(robLoc))
+			{
+				goal = node;
+			}
 		//add up
 		
 		return node;
+	}
+
+	private boolean isGoal(int[] robLoc) {
+		// TODO Auto-generated method stub
+		return data[robLoc[0]][robLoc[1]]==GridSpace.GOAL;
+	}
+
+	private boolean isBarrior(int[] robLoc) {
+
+		return data[robLoc[0]][robLoc[1]]==GridSpace.OBSTICAL;
 	}
 
 	private GraphNode init(int[] robLoc) {
 		if (nodes[robLoc[0]][robLoc[1]]==null)
 		{
 			GraphNode node = new GraphNode();
+			nodes[robLoc[0]][robLoc[1]]= node;
 			node.setUp(buildGraph(new int[]{robLoc[0],robLoc[1]+1}));
 			
 			
@@ -73,7 +93,7 @@ public class NodeMap implements INodeMap {
 			//add downRight
 			node.setDownRight(buildGraph(new int[]{robLoc[0]-1,robLoc[1]+1}));
 			
-			nodes[robLoc[0]][robLoc[1]]= node;
+		
 		}
 		
 		return nodes[robLoc[0]][robLoc[1]];
@@ -92,8 +112,7 @@ public class NodeMap implements INodeMap {
 		return root;
 	}
 
-<<<<<<< 667ec640ee8eab53105762c9f82afb6160f567b8
-=======
+
 	public void draw() {
 		
 		for (GraphNode[] row: nodes)
@@ -167,5 +186,5 @@ public class NodeMap implements INodeMap {
 		}
 	}
 
->>>>>>> Work on robot motion
+
 }
