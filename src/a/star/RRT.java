@@ -13,6 +13,7 @@ public class RRT implements IPathFinder {
 
     private ArrayList<int[]> pool;
     private Node root;
+    private Node goalNode;
     private int[] goal;
     private final int row = 0;
     private final int col = 1;
@@ -36,9 +37,8 @@ public class RRT implements IPathFinder {
             int[] selected = getRandom();
             nearest = getNearest(selected, spaces); //Adds to Path as well as returns it
         } while (nearest[row] != goal[row] && nearest[col] != goal[col]);
-
-        //Translate path to IRoboInstructions
-        return null;
+        
+        return translatePath();
     }
 
     private int[] getRandom() {
@@ -66,6 +66,7 @@ public class RRT implements IPathFinder {
             }
         }
         addToPath(nearestOnPath, nearestNeighborSoFar);
+        pool.remove(getPoolIndex(nearestNeighborSoFar));
         return nearestNeighborSoFar;
     }
 
@@ -116,9 +117,62 @@ public class RRT implements IPathFinder {
         return Math.sqrt(firstTerm + secTerm);
     }
 
-    private boolean isNeighbor(int[] nodeInPath, int[] potentialNeighbor) {
-        return Math.abs(nodeInPath[row] - potentialNeighbor[row]) <= 1 &&
-                Math.abs(nodeInPath[col] - potentialNeighbor[col]) <= 1;
+    private int getPoolIndex(int[] item) {
+        for (int i = 0; i < pool.size(); i++) {
+            int[] poolItem = pool.get(i);
+            if (poolItem[row] == item[row] && poolItem[col] == item[col]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private List<IRoboInstruction> translatePath() {
+        Node currentNode = goalNode;
+        List<IRoboInstruction> instructions = new ArrayList<>();
+        while (currentNode != null) {
+            if (currentNode.getParent() == null) break;
+            instructions.add(0, getInstruction(currentNode.getLocation(), currentNode.getParent().getLocation()));
+            currentNode = currentNode.getParent();
+        }
+        return instructions;
+    }
+
+    private IRoboInstruction getInstruction(int[] dest, int[] pos) {
+        IRoboInstruction instruction = null;
+        int yDiff = dest[row] - pos[row];
+        int xDiff = dest[col] - pos[col];
+        if (Math.abs(xDiff) > 1 || Math.abs(yDiff) > 1) {
+            System.out.println("Problem in RRT getInstruction");
+            return null;
+        }
+        if (yDiff == 1) {
+            if (xDiff == 1) {
+                //return up right instruction
+            } else if (xDiff == 0) {
+                //up
+            } else {
+                //up left
+            }
+        } else if (yDiff == 0) {
+            if (xDiff == 1) {
+                //right
+            } else if (xDiff == 0) {
+                System.out.println("Problem in RRT getInstruction: duplicate pos in path");
+                return null;
+            } else {
+                //left
+            }
+        } else {
+            if (xDiff == 1) {
+                //down right
+            } else if (xDiff == 0) {
+                //down
+            } else {
+                //down left
+            }
+        }
+        return instruction;
     }
 
     private class Node {
