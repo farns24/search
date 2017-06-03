@@ -1,11 +1,16 @@
 package a.star;
 
-public class GraphNode {
+import java.util.ArrayList;
+import java.util.List;
+
+public class GraphNode implements Comparable<GraphNode>{
+	
+	
 	
 	GraphNode up;
 	GraphNode down;
 	GraphNode left;
-	GraphNode rigth;
+	GraphNode right;
 	GraphNode upLeft;
 	GraphNode downleft;
 	GraphNode upRight;
@@ -13,6 +18,55 @@ public class GraphNode {
 	
 	GraphNode from;
 	
+	double distToGoal;
+	
+	public List<GraphNode> getNeighbors()
+	{
+		List<GraphNode> neighbors = new ArrayList<GraphNode>();
+		
+		if (up!=null)
+		{
+			neighbors.add(up);
+		}
+		if (down!=null)
+		{
+			neighbors.add(down);
+		}
+		if (left!=null)
+		{
+			neighbors.add(left);
+		}
+		if (right!=null)
+		{
+			neighbors.add(right);
+		}
+		if (upRight!=null)
+		{
+			neighbors.add(upRight);
+		}
+		if (upLeft!=null)
+		{
+			neighbors.add(upLeft);
+		}
+		if (downRight!=null)
+		{
+			neighbors.add(downRight);
+		}
+		if (downleft!=null)
+		{
+			neighbors.add(downleft);
+		}
+		
+		
+		return neighbors;
+	}
+	
+	public double getDistToGoal() {
+		return distToGoal;
+	}
+	public void setDistToGoal(double distToGoal) {
+		this.distToGoal = distToGoal;
+	}
 	boolean isGoal = false;
 	
 	public GraphNode getFrom() {
@@ -46,10 +100,10 @@ public class GraphNode {
 		this.left = left;
 	}
 	public GraphNode getRigth() {
-		return rigth;
+		return right;
 	}
 	public void setRigth(GraphNode rigth) {
-		this.rigth = rigth;
+		this.right = rigth;
 	}
 	public GraphNode getUpLeft() {
 		return upLeft;
@@ -74,6 +128,11 @@ public class GraphNode {
 	}
 	public void setDownRight(GraphNode downRight) {
 		this.downRight = downRight;
+	}
+	@Override
+	public int compareTo(GraphNode arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
