@@ -37,7 +37,7 @@ public class RRT implements IPathFinder {
             int[] selected = getRandom();
             nearest = getNearest(selected, spaces); //Adds to Path as well as returns it
         } while (nearest[row] != goal[row] && nearest[col] != goal[col]);
-        
+
         return translatePath();
     }
 
@@ -67,6 +67,9 @@ public class RRT implements IPathFinder {
         }
         addToPath(nearestOnPath, nearestNeighborSoFar);
         pool.remove(getPoolIndex(nearestNeighborSoFar));
+        if (nearestNeighborSoFar[0] == goal[0] && nearestNeighborSoFar[1] == goal[1]) {
+            goalNode = new Node(nearestNeighborSoFar);
+        }
         return nearestNeighborSoFar;
     }
 
