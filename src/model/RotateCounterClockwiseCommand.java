@@ -1,4 +1,4 @@
-package test;
+package model;
 
 import telnet.TaskException;
 import telnet.TelnetProxy;
