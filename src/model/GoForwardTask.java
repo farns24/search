@@ -10,6 +10,13 @@ public class GoForwardTask extends MotionState {
 
 		try {
 			proxy.speed(4, 4);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		} catch (TaskException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

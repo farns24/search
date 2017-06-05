@@ -43,37 +43,79 @@ public class RunAStar {
 			Collections.reverse(path);
 			map.overLayPath(path);
 
+			//Loop forever
 			while (true) {
 
 				// initialize potential fields
 				// RobotLocation goal = map.get(goalID); //Goal location
+				//If Path is larger than 0
 				if (path.size() > 0) {
+					
+					//Get next step
 					GraphNode step = path.get(0);
+					
 					// get robot position
 					try {
 						RobotLocation rob = proxy.whereRobot();
+						//if something broke, stop the robot and try again
 						if (rob == null || rob.getCenter() == null) {
+							proxy.speed(0, 0);
 							continue;
 						}
+						
+						
 						System.out.println("Robot Position "+ Arrays.toString(rob.getCenter()));
-						System.out.println("Sep Position "+ Arrays.toString(step.getPosition()));
-						// get potential field vector at robot's position
-						int[] vect = new int[]{rob.getCenter()[0]-step.getPosition()[0],rob.getCenter()[1]-step.getPosition()[1]};
-						System.out.println(Arrays.toString(vect));
+						System.out.println("Step Position "+ Arrays.toString(step.getPosition()));
+						
+						
+						// get potential field vector pointing from the robot to the step
+						int[] vect = new int[]{step.getPosition()[0]-rob.getCenter()[0],step.getPosition()[1]-rob.getCenter()[1]};
+						//System.out.println(Arrays.toString(vect));
 						// Stop if at goal
-						if (MyUtils.madeIt(vect,path.size()==1)) {
-							//proxy.speed(0, 0);
-							path.remove(0);
-							continue;
-						}
-
+						
+						
+						/*
+						 * TODO UNTESTED CHANGE
+						 * 
+						 * 1. get vector
+						 * 2. rotate to position
+						 * 3. Go streight 1
+						 * 
+						 */
 						double robTheta = rob.getOrientation();
 						double goalTheta = rob.getGoalTheta(vect);
-
+						
 						MotionState command = MyUtils.getOrders(robTheta,
 								goalTheta);
-
+							
 						command.run(proxy);
+						path.remove(0);
+						
+						if (MyUtils.madeIt(vect,path.size()==0)&& path.size()==0) {
+								proxy.speed(0, 0);
+								break;
+							
+						}
+						
+						/*
+						 * We'll assume that the robot made it close enough to the step. 
+						 * Only the goal will have a test to see if we hit it.
+						 */
+						
+						/*if (MyUtils.madeIt(vect,path.size()==1)) {
+							//proxy.speed(0, 0);
+							
+							if (path.size()==0)
+							{
+								proxy.speed(0, 0);
+								break;
+							}
+							continue;
+						}*/
+
+					
+
+						
 
 					} catch (Exception e) {
 						e.printStackTrace();
