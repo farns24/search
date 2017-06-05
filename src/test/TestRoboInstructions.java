@@ -1,15 +1,7 @@
 package test;
 
-import static org.junit.Assert.*;
-
-import java.awt.Robot;
-
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
-
-import model.ForwardCommand;
 import model.MoveNorthCommand;
 import model.RobotNavigator;
-import model.RotateClockwiseCommand;
 
 import org.junit.Test;
 
@@ -44,7 +36,7 @@ public class TestRoboInstructions {
 			e.printStackTrace();
 		}
 		RobotNavigator navigator = new RobotNavigator(proxy);
-		navigator.move(new MoveNorthCommand());
+//		navigator.move(new MoveNorthCommand());
 		
 	}
 

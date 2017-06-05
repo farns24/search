@@ -2,7 +2,7 @@ package model;
 
 import telnet.TelnetProxy;
 
-public class MoveNorthCommand implements IRoboInstruction {
+public class MoveSouthWestCommand implements IRoboInstruction {
 	
 	@Override
 	public void moveRobot(TelnetProxy proxy) {
@@ -14,34 +14,34 @@ public class MoveNorthCommand implements IRoboInstruction {
 
 		switch (currentDir) {
 			case EAST:
-				ccw.moveRobot(proxy, 2);
-				fc.moveRobot(proxy);
-				break;
-			case NORTHEAST:
-				ccw.moveRobot(proxy, 1);
-				fc.moveRobot(proxy);
-				break;
-			case NORTH:
-				fc.moveRobot(proxy);
-				break;
-			case NORTHWEST:
-				cw.moveRobot(proxy, 1);
-				fc.moveRobot(proxy);
-				break;
-			case WEST:
-				cw.moveRobot(proxy, 2);
-				fc.moveRobot(proxy);
-				break;
-			case SOUTHWEST:
 				cw.moveRobot(proxy, 3);
 				fc.moveRobot(proxy);
 				break;
-			case SOUTH:
+			case NORTHEAST:
 				ccw.moveRobot(proxy, 4);
 				fc.moveRobot(proxy);
 				break;
-			case SOUTHEAST:
+			case NORTH:
 				ccw.moveRobot(proxy, 3);
+				fc.moveRobot(proxy);
+				break;
+			case NORTHWEST:
+				ccw.moveRobot(proxy, 2);
+				fc.moveRobot(proxy);
+				break;
+			case WEST:
+				ccw.moveRobot(proxy, 1);
+				fc.moveRobot(proxy);
+				break;
+			case SOUTHWEST:
+				fc.moveRobot(proxy);
+				break;
+			case SOUTH:
+				cw.moveRobot(proxy, 1);
+				fc.moveRobot(proxy);
+				break;
+			case SOUTHEAST:
+				cw.moveRobot(proxy, 2);
 				fc.moveRobot(proxy);
 				break;
 			case UNKNOWN:
