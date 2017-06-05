@@ -2,18 +2,16 @@ package model;
 
 import telnet.TaskException;
 import telnet.TelnetProxy;
-import model.IRoboInstruction;
 
-public class RotateCounterClockwiseCommand implements IRoboInstruction {
+public class RotateCounterClockwiseCommand {
 
-	@Override
-	public void moveRobot(TelnetProxy proxy) {
+	public void moveRobot(TelnetProxy proxy, int multiplier) {
 		
 		try {
-			proxy.speed(5,0);
+			proxy.speed(5,-5);
 			System.out.println("Move");
 			 try {
-				Thread.sleep(2000);
+				Thread.sleep(500*multiplier);
 				proxy.speed(0, 0);
 				System.out.println("Time up");
 			} catch (InterruptedException e) {

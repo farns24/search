@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 /**
  * Created by michael on 6/5/17.
  */
-public class RotateClockwiseCommandTest {
+public class RotateCommandTest {
 
     @Test
     public void moveRobot() throws Exception {
@@ -23,7 +23,7 @@ public class RotateClockwiseCommandTest {
             proxy.connectToBot();
 
             LocationScape locBefore = proxy.where();
-            c.moveRobot(proxy);
+            c.moveRobot(proxy,3);
 //            LocationScape locAfter = proxy.where();
         } catch (TaskException e) {
             e.printStackTrace();
