@@ -37,14 +37,7 @@ public class TestAstar {
 		    AStar aStar = new AStar();
 		   List<GraphNode> path = aStar.doAstar(map.getRoot(), map.getGoal());
 		   map.overLayPath(path);
-//		    if (path!=null)
-//		   for ( GraphNode step:path)
-//		   {
-//			   System.out.println(Arrays.toString(step.getPosition()));
-//		   }
-//		    else
-//		    	System.out.println("No Path found");
-		    
+
 		} catch (TaskException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

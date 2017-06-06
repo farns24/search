@@ -9,14 +9,15 @@ import java.util.*;
  */
 public class RRT implements IPathFinder {
 
-    private ArrayList<int[]> pool;
-    private Node root;
-    private Node goalNode;
-    private int[] goal;
+    protected ArrayList<int[]> pool;
+    protected Node root;
+    protected Node goalNode;
+    protected int[] goal;
     private final int row = 0;
     private final int col = 1;
     private int rows;
     private int cols;
+	
 
     public RRT() {
         pool = new ArrayList<>();
@@ -45,7 +46,7 @@ public class RRT implements IPathFinder {
         return translatePath();
     }
 
-    private int[] getRandom() {
+    protected int[] getRandom() {
         Random rand = new Random();
         int r = rand.nextInt(pool.size());
         return pool.get(r);
@@ -145,15 +146,24 @@ public class RRT implements IPathFinder {
     private List<IRoboInstruction> translatePath() {
         Node currentNode = goalNode;
         List<IRoboInstruction> instructions = new ArrayList<>();
+        ArrayList<int[]> pathNodes  = new ArrayList<int[]>();
         while (currentNode != null) {
             if (currentNode.getParent() == null) break;
             instructions.add(0, getInstruction(currentNode.getLocation(), currentNode.getParent().getLocation()));
+            
+			pathNodes.add(currentNode.getLocation());
             currentNode = currentNode.getParent();
         }
+        loadLocation(pathNodes);
         return instructions;
     }
 
-    private IRoboInstruction getInstruction(int[] dest, int[] pos) {
+    protected void loadLocation(ArrayList<int[]> pathNodes) {
+		
+		
+	}
+
+	private IRoboInstruction getInstruction(int[] dest, int[] pos) {
         IRoboInstruction instruction = null;
         int yDiff = pos[row] - dest[row];
         int xDiff = dest[col] - pos[col];
@@ -251,7 +261,7 @@ public class RRT implements IPathFinder {
         return result;
     }
 
-    private class Node {
+    class Node {
         int[] location;
         Node parent;
         ArrayList<Node> children;

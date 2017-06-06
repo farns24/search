@@ -14,6 +14,36 @@ public class NodeMap implements INodeMap {
 		private GraphNode root;
 		private GraphNode goal;
 
+		
+		
+		public void setGoal(GraphNode goal) {
+			this.goal = goal;
+		}
+
+		public GridSpace[][] getData() {
+			return data;
+		}
+
+		public void setData(GridSpace[][] data) {
+			this.data = data;
+		}
+
+		public GraphNode[][] getNodes() {
+			return nodes;
+		}
+
+		public void setNodes(GraphNode[][] nodes) {
+			this.nodes = nodes;
+		}
+
+		public static GridSpace getPath() {
+			return PATH;
+		}
+
+		public void setRoot(GraphNode root) {
+			this.root = root;
+		}
+
 		public NodeMap(IMaze maze)
 		{
 		//Create a connected graph between each node in the data.

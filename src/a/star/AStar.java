@@ -9,24 +9,96 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import a.star.RRT.Node;
 import model.GridSpace;
 import model.IMaze;
 import model.IRoboInstruction;
+import model.MoveEastCommand;
+import model.MoveNorthCommand;
+import model.MoveNorthEastCommand;
+import model.MoveNorthWestCommand;
+import model.MoveSouthCommand;
+import model.MoveSouthEastCommand;
+import model.MoveSouthWestCommand;
+import model.MoveWestCommand;
 
 public class AStar implements IPathFinder {
 
+    private final int row = 0;
+    private final int col = 1;
 	@Override
 	public List<IRoboInstruction> findPath(IMaze maze) {
 		
 		//GridSpace[][] data = maze.getData();
 		
-		INodeMap nm = new NodeMap(maze);
+		NodeMap nm = new NodeMap(maze);
 		
 		//TODO perform A* Logic here
+		List<GraphNode> path = doAstar(nm.getRoot(), nm.getGoal());
 		
-		//new helper().convert(
-		return null;
+		
+
+		return translatePath(path);
 	}
+	
+	private IRoboInstruction getInstruction(int[] dest, int[] pos) {
+        IRoboInstruction instruction = null;
+        int yDiff = pos[row] - dest[row];
+        int xDiff = dest[col] - pos[col];
+        if (Math.abs(xDiff) > 1 || Math.abs(yDiff) > 1) {
+            System.out.println("Problem in RRT getInstruction");
+            return null;
+        }
+        if (yDiff == 1) {
+            if (xDiff == 1) {
+                //return up right instruction
+                return new MoveNorthEastCommand();
+            } else if (xDiff == 0) {
+                //up
+                return new MoveNorthCommand();
+            } else {
+                //up left
+                return new MoveNorthWestCommand();
+            }
+        } else if (yDiff == 0) {
+            if (xDiff == 1) {
+                //right
+                return new MoveEastCommand();
+            } else if (xDiff == 0) {
+                System.out.println("Problem in RRT getInstruction: duplicate pos in path");
+                return null;
+            } else {
+                //left
+                return new MoveWestCommand();
+            }
+        } else {
+            if (xDiff == 1) {
+                //down right
+                return new MoveSouthEastCommand();
+            } else if (xDiff == 0) {
+                //down
+                return new MoveSouthCommand();
+            } else {
+                //down left
+                return new MoveSouthWestCommand();
+            }
+        }
+    }
+	
+	 private List<IRoboInstruction> translatePath(List<GraphNode> path) {
+	        GraphNode currentNode = path.get(0);
+	        List<IRoboInstruction> instructions = new ArrayList<>();
+	        ArrayList<int[]> pathNodes  = new ArrayList<int[]>();
+	        for (int i =1; i<path.size();i++)
+	        {
+	           
+	            instructions.add(0, getInstruction(currentNode.getPosition(), path.get(i).getPosition()));
+	            
+			
+	            currentNode = path.get(i);
+	        }
+	        return instructions;
+	    }
 	
 	private Set<GraphNode> closedSet = new HashSet<GraphNode>();
 	private Set<GraphNode> openSet = new TreeSet<GraphNode>();

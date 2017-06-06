@@ -8,6 +8,7 @@ import org.hamcrest.Condition.Step;
 import a.star.AStar;
 import a.star.GraphNode;
 import a.star.NodeMap;
+import model.IRoboInstruction;
 import model.LocationScape;
 import model.Maze;
 import model.MotionState;
@@ -27,7 +28,7 @@ public class RunAStar {
 		// Main
 
 		String goalID = "3";
-		ITelnetProxy proxy = new TelnetProxy();
+		TelnetProxy proxy = new TelnetProxy();
 		try {
 			proxy.connectToBot();
 			Maze m = new Maze();
@@ -39,6 +40,15 @@ public class RunAStar {
 			map.draw();
 
 			AStar aStar = new AStar();
+			
+			List<IRoboInstruction> commands = aStar.findPath(m);
+			
+			for (IRoboInstruction cmd: commands)
+			{
+				cmd.moveRobot(proxy);
+			}
+			
+			/*
 			List<GraphNode> path = aStar.doAstar(map.getRoot(), map.getGoal());
 			Collections.reverse(path);
 			map.overLayPath(path);
@@ -74,14 +84,7 @@ public class RunAStar {
 						// Stop if at goal
 						
 						
-						/*
-						 * TODO UNTESTED CHANGE
-						 * 
-						 * 1. get vector
-						 * 2. rotate to position
-						 * 3. Go streight 1
-						 * 
-						 */
+						
 						double robTheta = rob.getOrientation();
 						double goalTheta = rob.getGoalTheta(vect);
 						
@@ -97,21 +100,9 @@ public class RunAStar {
 							
 						}
 						
-						/*
-						 * We'll assume that the robot made it close enough to the step. 
-						 * Only the goal will have a test to see if we hit it.
-						 */
 						
-						/*if (MyUtils.madeIt(vect,path.size()==1)) {
-							//proxy.speed(0, 0);
-							
-							if (path.size()==0)
-							{
-								proxy.speed(0, 0);
-								break;
-							}
-							continue;
-						}*/
+						
+						
 
 					
 
@@ -125,7 +116,7 @@ public class RunAStar {
 				{
 					proxy.speed(0, 0);
 				}
-			}
+			}*/
 		} catch (TaskException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
