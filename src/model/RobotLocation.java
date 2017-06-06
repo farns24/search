@@ -23,7 +23,7 @@ public class RobotLocation {
 	}
 
 	public double getOrientation() {
-		return Math.atan2(orientation[1],orientation[0]);//orientation;
+		return Math.atan2(-orientation[1],orientation[0]);//orientation;
 	}
 
 	public void setOrientation(double[] orientation) {

@@ -15,7 +15,7 @@ public class ForwardCommand implements IRoboInstruction {
 	public void moveRobot(TelnetProxy proxy) {
 		
 		try {
-			proxy.speed(3, 3);
+			proxy.speed(5, 5);
 			System.out.println("Move");
 			 try {
 				Thread.sleep(1400);

@@ -9,7 +9,7 @@ public class RotateClockwiseCommand implements IRotateCommand {
 	public void moveRobot(TelnetProxy proxy, int multiplier) {
 		
 		try {
-			proxy.speed(-5, 5);
+			proxy.speed(5, -5);
 			System.out.println("Move");
 			 try {
 				Thread.sleep(miliseconds*multiplier);

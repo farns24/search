@@ -55,7 +55,8 @@ public class RobotNavigator {
 	}
 
 	private boolean isEast(double orientation) {
-		return Math.abs(orientation - 0) < Math.PI/8.0;
+		return Math.abs(orientation - 0) < Math.PI/8.0 || 
+				Math.abs(orientation - (2*Math.PI)) < Math.PI/8.0;
 	}
 
 	private boolean isSouthEast(double orientation) {
