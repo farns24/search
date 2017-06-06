@@ -1,8 +1,6 @@
 package a.star;
 
-import model.GridSpace;
-import model.IMaze;
-import model.IRoboInstruction;
+import model.*;
 
 import java.util.*;
 
@@ -157,7 +155,7 @@ public class RRT implements IPathFinder {
 
     private IRoboInstruction getInstruction(int[] dest, int[] pos) {
         IRoboInstruction instruction = null;
-        int yDiff = dest[row] - pos[row];
+        int yDiff = pos[row] - dest[row];
         int xDiff = dest[col] - pos[col];
         if (Math.abs(xDiff) > 1 || Math.abs(yDiff) > 1) {
             System.out.println("Problem in RRT getInstruction");
@@ -166,30 +164,37 @@ public class RRT implements IPathFinder {
         if (yDiff == 1) {
             if (xDiff == 1) {
                 //return up right instruction
+                return new MoveNorthEastCommand();
             } else if (xDiff == 0) {
                 //up
+                return new MoveNorthCommand();
             } else {
                 //up left
+                return new MoveNorthWestCommand();
             }
         } else if (yDiff == 0) {
             if (xDiff == 1) {
                 //right
+                return new MoveEastCommand();
             } else if (xDiff == 0) {
                 System.out.println("Problem in RRT getInstruction: duplicate pos in path");
                 return null;
             } else {
                 //left
+                return new MoveWestCommand();
             }
         } else {
             if (xDiff == 1) {
                 //down right
+                return new MoveSouthEastCommand();
             } else if (xDiff == 0) {
                 //down
+                return new MoveSouthCommand();
             } else {
                 //down left
+                return new MoveSouthWestCommand();
             }
         }
-        return instruction;
     }
 
     public void printGraph() {
