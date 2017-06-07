@@ -7,7 +7,9 @@ import org.hamcrest.Condition.Step;
 
 import a.star.AStar;
 import a.star.GraphNode;
+import a.star.IPathFinder;
 import a.star.NodeMap;
+import a.star.RRT;
 import model.IRoboInstruction;
 import model.LocationScape;
 import model.Maze;
@@ -36,12 +38,15 @@ public class RunAStar {
 			m.initMaze(location, 3);
 			m.draw();
 
-			NodeMap map = new NodeMap(m);
-			map.draw();
+//			NodeMap map = new NodeMap(m);
+//			map.draw();
 
-			AStar aStar = new AStar();
+//			IPathFinder pathFinder = new AStar();
+			RRT pathFinder = new RRT();
 			
-			List<IRoboInstruction> commands = aStar.findPath(m);
+			
+			List<IRoboInstruction> commands = pathFinder.findPath(m);
+			pathFinder.printPath();
 			
 			for (IRoboInstruction cmd: commands)
 			{

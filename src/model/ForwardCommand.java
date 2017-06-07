@@ -18,7 +18,7 @@ public class ForwardCommand implements IRoboInstruction {
 			proxy.speed(5, 5);
 			System.out.println("Move");
 			 try {
-				Thread.sleep(1400);
+				Thread.sleep(1800);
 				proxy.speed(0, 0);
 				System.out.println("Time up");
 			} catch (InterruptedException e) {

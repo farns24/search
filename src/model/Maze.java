@@ -137,6 +137,22 @@ public class Maze implements IMaze {
 				goalY = cent[1];
 				data[cent[0]][cent[1]] = GridSpace.GOAL;
 			} else {
+				int yUp = cent[1]-1;
+				int yDown = cent[1]+1;
+				int xRight = cent[0]+1;
+				int xLeft = cent[0]-1;
+				if(yUp >= 0 && yUp < data[0].length) {
+					data[cent[0]][yUp] = GridSpace.OBSTICAL;
+				}
+				if(yDown >= 0 && yDown < data[0].length) {
+					data[cent[0]][yDown] = GridSpace.OBSTICAL;
+				}
+				if(xLeft >= 0 && xLeft < data.length) {
+					data[xLeft][cent[1]] = GridSpace.OBSTICAL;
+				}
+				if(xRight >= 0 && xRight < data.length) {
+					data[xRight][cent[1]] = GridSpace.OBSTICAL;
+				}
 				data[cent[0]][cent[1]] = GridSpace.OBSTICAL;
 			}
 			
