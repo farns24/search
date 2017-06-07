@@ -7,6 +7,7 @@ import java.util.List;
 
 import model.LocationScape;
 import model.Maze;
+import model.RobotLocation;
 
 import org.junit.Test;
 
@@ -20,14 +21,20 @@ public class TestAstar {
 
 	@Test
 	public void test() {
-		TelnetProxy proxy = new TelnetProxy();
+		//TelnetProxy proxy = new TelnetProxy();
 		
-		try {
-			proxy.connectToBot();
 		
 		
 		    Maze m = new Maze();
-		    LocationScape location=proxy.where();
+		    LocationScape location=new LocationScape();
+		    RobotLocation robLoc =new RobotLocation();
+		    robLoc.setCenter(new double[]{1.0,1.0});
+		    location.put("robot",robLoc );
+
+		    RobotLocation goalLoc =new RobotLocation();
+		    goalLoc.setCenter(new double[]{1000.0,890.0});
+		    location.put("3",goalLoc );
+		    
 		    m.initMaze(location, 3);
 		    m.draw();
 		    
@@ -37,10 +44,7 @@ public class TestAstar {
 		    AStar aStar = new AStar();
 		   List<GraphNode> path = aStar.doAstar(map.getRoot(), map.getGoal());
 		   map.overLayPath(path);
-
-		} catch (TaskException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}}
-
+	}
 }
+
+		

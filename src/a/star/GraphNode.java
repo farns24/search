@@ -7,6 +7,10 @@ public class GraphNode implements Comparable<GraphNode>{
 	
 	
 	
+	public GraphNode(int[] pos) {
+		super();
+		this.pos = pos;
+	}
 	GraphNode up;
 	GraphNode down;
 	GraphNode left;
@@ -23,23 +27,6 @@ public class GraphNode implements Comparable<GraphNode>{
 	public List<GraphNode> getNeighbors()
 	{
 		List<GraphNode> neighbors = new ArrayList<GraphNode>();
-		
-		if (up!=null)
-		{
-			neighbors.add(up);
-		}
-		if (down!=null)
-		{
-			neighbors.add(down);
-		}
-		if (left!=null)
-		{
-			neighbors.add(left);
-		}
-		if (right!=null)
-		{
-			neighbors.add(right);
-		}
 		if (upRight!=null)
 		{
 			neighbors.add(upRight);
@@ -56,6 +43,23 @@ public class GraphNode implements Comparable<GraphNode>{
 		{
 			neighbors.add(downleft);
 		}
+		if (up!=null)
+		{
+			neighbors.add(up);
+		}
+		if (down!=null)
+		{
+			neighbors.add(down);
+		}
+		if (left!=null)
+		{
+			neighbors.add(left);
+		}
+		if (right!=null)
+		{
+			neighbors.add(right);
+		}
+		
 		
 		
 		return neighbors;
@@ -68,6 +72,7 @@ public class GraphNode implements Comparable<GraphNode>{
 		this.distToGoal = distToGoal;
 	}
 	boolean isGoal = false;
+	private int[] pos;
 	
 	public GraphNode getFrom() {
 		return from;
@@ -131,13 +136,12 @@ public class GraphNode implements Comparable<GraphNode>{
 	}
 	@Override
 	public int compareTo(GraphNode arg0) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	public int[] getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return pos;
 	}
 
 }

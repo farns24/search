@@ -2,10 +2,12 @@ package a.star;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -132,7 +134,29 @@ public class AStar implements IPathFinder {
 
     while (!openSet.isEmpty())// is not empty
     {
-        GraphNode current= Collections.min(openSet);//:= the node in openSet having the lowest fScore[] value
+    	
+    	//
+    	
+    	GraphNode current = Collections.min(openSet, new Comparator<GraphNode>() {
+    	    public int compare(GraphNode entry1, GraphNode entry2) {
+    	    	
+    	    	if (fScore.containsKey(entry1)== false)
+    	    	{
+    	    		fScore.put(entry1, Integer.MAX_VALUE);
+    	    	}
+    	    	if (fScore.containsKey(entry2)== false)
+    	    	{
+    	    		fScore.put(entry2, Integer.MAX_VALUE);
+    	    	}
+    	    	
+    	        return fScore.get(entry1).compareTo(fScore.get(entry2));
+    	    }
+    	});
+    	
+    	//-->
+       // GraphNode current= min.getKey();//Collections.min(fScore);//:= the node in openSet having the lowest fScore[] value
+        
+        
         if (current == goal)
         {
             return reconstruct_path(current);
@@ -152,13 +176,13 @@ public class AStar implements IPathFinder {
             {
                 openSet.add(neighbor);
             }
-            else if (tentative_gScore >= gScore.get(neighbor))
+            else if (gScore.containsKey(neighbor)==false ||tentative_gScore >= gScore.get(neighbor))
                 continue;		// This is not a better path.
 
             // This path is the best until now. Record it!
             cameFrom.put(neighbor, current);
             gScore.put(neighbor, tentative_gScore);
-            fScore.put(neighbor, gScore.get(neighbor) + heuristic_cost_estimate(neighbor, goal));
+            fScore.put(neighbor, tentative_gScore + heuristic_cost_estimate(neighbor, goal));
             }
     }
 	return null;
@@ -166,8 +190,7 @@ public class AStar implements IPathFinder {
 	}
 	
 private Integer heuristic_cost_estimate(GraphNode neighbor, GraphNode goal) {
-		// TODO Auto-generated method stub
-		return null;
+		return (int) Math.sqrt(Math.pow(neighbor.getPosition()[0]- goal.getPosition()[0],2)-Math.pow(neighbor.getPosition()[1]- goal.getPosition()[1],2));
 	}
 
     private List<GraphNode> reconstruct_path(GraphNode current){

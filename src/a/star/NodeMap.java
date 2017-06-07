@@ -96,7 +96,7 @@ public class NodeMap implements INodeMap {
 	private GraphNode init(int[] robLoc) {
 		if (nodes[robLoc[0]][robLoc[1]]==null)
 		{
-			GraphNode node = new GraphNode();
+			GraphNode node = new GraphNode(robLoc);
 			nodes[robLoc[0]][robLoc[1]]= node;
 			node.setUp(buildGraph(new int[]{robLoc[0],robLoc[1]+1}));
 			
@@ -133,7 +133,7 @@ public class NodeMap implements INodeMap {
 		
 		
 		
-		boolean res = i[0]>-1 && i[0]<data.length && i[1]>-1 && i[1]>data[0].length;
+		boolean res = i[0]>-1 && i[0]<data.length && i[1]>-1 && i[1]<data[0].length;
 		return !res;
 	}
 

@@ -36,7 +36,7 @@ public class RobotLocation {
 //		System.out.printf("pos[1]: %f\n", pos[1]);
 		
         int x = (int)(pos[0]/118.0);
-        int y = (int)(pos[1]/118.0);
+        int y = (int)(pos[1]/118.0);//118.0 is the width of a paper square
         return new int[] {x,y};
     }
 	public int[] getCenter() {
