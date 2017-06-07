@@ -74,7 +74,7 @@ public class RRT implements IPathFinder {
         }
         if (nearestNeighborSoFar != null) {
             addToPath(nearestOnPath, nearestNeighborSoFar);
-            pool.remove(getPoolIndex(nearestNeighborSoFar));
+            removeElements(nearestNeighborSoFar);
             if (nearestNeighborSoFar[0] == goal[0] && nearestNeighborSoFar[1] == goal[1]) {
                 goalNode = new Node(nearestNeighborSoFar);
                 goalNode.setParent(nearestOnPath);
@@ -259,6 +259,17 @@ public class RRT implements IPathFinder {
             currentNode = currentNode.getParent();
         } while(currentNode != null);
         return result;
+    }
+
+    private void removeElements(int[] element) {
+        ArrayList<int[]> newPool = new ArrayList<>();
+        for (int i = 0; i < pool.size(); i++) {
+            int[] poolItem = pool.get(i);
+            if (!(poolItem[row] == element[row] && poolItem[col] == element[col])) {
+                newPool.add(poolItem);
+            }
+        }
+        pool = newPool;
     }
 
     class Node {
