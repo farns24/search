@@ -41,12 +41,12 @@ public class RunAStar {
 //			NodeMap map = new NodeMap(m);
 //			map.draw();
 
-//			IPathFinder pathFinder = new AStar();
-			RRT pathFinder = new RRT();
+			IPathFinder pathFinder = new AStar();
+		//	RRT pathFinder = new RRT();
 			
 			
 			List<IRoboInstruction> commands = pathFinder.findPath(m);
-			pathFinder.printPath();
+			//pathFinder.printPath();
 			
 			for (IRoboInstruction cmd: commands)
 			{

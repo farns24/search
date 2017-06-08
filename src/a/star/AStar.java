@@ -26,8 +26,8 @@ import model.MoveWestCommand;
 
 public class AStar implements IPathFinder {
 
-    private final int row = 0;
-    private final int col = 1;
+    private final int row = 1;
+    private final int col = 0;
 	@Override
 	public List<IRoboInstruction> findPath(IMaze maze) {
 		
@@ -190,7 +190,8 @@ public class AStar implements IPathFinder {
 	}
 	
 private Integer heuristic_cost_estimate(GraphNode neighbor, GraphNode goal) {
-		return (int) Math.sqrt(Math.pow(neighbor.getPosition()[0]- goal.getPosition()[0],2)-Math.pow(neighbor.getPosition()[1]- goal.getPosition()[1],2));
+		//return (int) Math.sqrt(Math.pow(neighbor.getPosition()[0]- goal.getPosition()[0],2)+Math.pow(neighbor.getPosition()[1]- goal.getPosition()[1],2));
+	     return Math.abs(neighbor.getPosition()[0]- goal.getPosition()[0])+ Math.abs(neighbor.getPosition()[1]- goal.getPosition()[1]);
 	}
 
     private List<GraphNode> reconstruct_path(GraphNode current){
